@@ -1,34 +1,43 @@
-import React, {Component} from 'react';
-import {GoogleMapLoader, GoogleMap, Marker} from 'react-google-maps';
+import React, { Component, PropTypes } from 'react';
+import GoogleMapReact from 'google-map-react';
 
-class MapContainer extends Component{
-    render(){
-        const mapContainer = <div style={{height: '100%', width:'100%'}}></div>
+const AnyReactComponent = ({ text }) => <div><img src="/map-marker-icon.png" width="20px" height="20px" /></div>;
 
-        const markers = this.props.markers.map((venue, i) => {
+const defaultProps = {
+  center: {lat: 34.7472472, lng: -86.5817218},
+  zoom: 13
+};
 
-            const marker = {
-                position: {
-                    lat: venue.location.lat,
-                    lng: venue.location.lng
-                }
-            }
-            return <Marker key={i} {...marker} />
-        })
-        return (
-            <GoogleMapLoader
-                containerElement = {mapContainer}
-                googleMapElement = {
-                    <GoogleMap
-                        defaultZoom={15}
-                    defaultCenter={this.props.center}
-                    options={{streetViewControl: false, mapTypeControl: false}}>
-                        {markers}
-                    </GoogleMap>
-                } />
-
-        )
+const MapContainer = ({ chatLogs }) => (
+  <GoogleMapReact
+    defaultCenter={defaultProps.center}
+    defaultZoom={defaultProps.zoom}
+  >
+    {chatLogs.map(chatLog => {
+      if (!chatLog.latitude || !chatLog.longitude) {
+        return;
+      }
+      return (
+      <AnyReactComponent
+        lat={chatLog.latitude}
+        lng={chatLog.longitude}
+        text={chatLog.priority}
+      />
+      );
     }
-}
+  )}
+  </GoogleMapReact>
+);
+
+MapContainer.propTypes = {
+  chatLogs: PropTypes.arrayOf(React.PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    caseNumber: PropTypes.number.isRequired,
+    priority: PropTypes.string.isRequired,
+    lastMessage: PropTypes.string.isRequired,
+    timestamp: PropTypes.string.isRequired,
+  })).isRequired,
+};
+
 
 export default MapContainer;

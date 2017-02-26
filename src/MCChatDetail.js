@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Button, Link } from 'react-router';
 import moment from 'moment';
 import ChatLogs from './ChatLogs';
 import ChatMessageList from './ChatMessageList';
@@ -35,9 +35,12 @@ class MCChatDetail extends Component {
       <div>
         <Link to={`/mc`}>&lt; Back</Link>
         <div key={this.state.chatLog.id} className="list-group">
-          Case Number: {this.state.chatLog.caseNumber}<br />
-          Priority: {this.state.chatLog.priority}<br />
-          Last Message: {this.state.chatLog.lastMessage}<br />
+          <strong>Case Number:</strong> {this.state.chatLog.caseNumber}<br />
+          <strong>Priority:</strong> {this.state.chatLog.priority}<br />
+          <strong>Last Message:</strong> {this.state.chatLog.lastMessage}<br />
+          <strong>logitude:</strong> {this.state.chatLog.longitude}<br />
+          <strong>latitude:</strong> {this.state.chatLog.latitude}<br />
+
           {moment(this.state.chatLog.timestamp).fromNow()}<br />
           <ChatMessageList messages={this.state.chatLog.chatLogs} />
         </div>

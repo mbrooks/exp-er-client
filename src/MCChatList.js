@@ -12,11 +12,14 @@ const MCChatList = ({ chatLogs }) => (
   <div>
     {chatLogs.map(chatLog => (
       <div key={chatLog.id} className="list-group">
-        Case Number: {chatLog.caseNumber}<br />
-        Priority: {chatLog.priority}<br />
-        Last Message: {chatLog.lastMessage}<br />
+        <strong>Case Number:</strong> {chatLog.caseNumber}<br />
+        <strong>Priority:</strong> {chatLog.priority}<br />
+        <strong>Last Message:</strong> {chatLog.lastMessage}<br />
+        <strong>logitude:</strong> {chatLog.longitude}<br />
+        <strong>latitude:</strong> {chatLog.latitude}<br />
+
         {moment(chatLog.timestamp).fromNow()}<br />
-        <Link to={`/mc/chat-detail/${chatLog.id}`}>View</Link>
+      <Button href={`/#/mc/chat-detail/${chatLog.id}`} bsSize="small" >View</Button>
       </div>
     ))}
   </div>
@@ -29,6 +32,8 @@ MCChatList.propTypes = {
     priority: PropTypes.string.isRequired,
     lastMessage: PropTypes.string.isRequired,
     timestamp: PropTypes.string.isRequired,
+    longitude: PropTypes.number,
+    latitude: PropTypes.numbers,
   })).isRequired,
 };
 
