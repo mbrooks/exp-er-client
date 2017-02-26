@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 import socketIoClient from 'socket.io-client';
 import uuid from 'uuid';
 import config from '../config/config';
@@ -17,9 +17,41 @@ io.on('disconnect', () => {
   console.log('got a disconnect yo!');
 });
 
+const styles = {
+  chatMessageList: {
+    position: 'fixed',
+    bottom: '120px',
+    left: 0,
+    right: 0,
+    overflow: 'auto',
+  },
+  sendMessageBox: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '100px',
+  },
+};
+
+let currentPosition;
+let currentLongitude;
+let currentLatitude;
+
 function trim1 (str) {
     return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
+
+function updatePosition(pos) {
+  currentPosition = pos.coords;
+  currentLatitude = currentPosition.latitude;
+  currentLongitude = currentPosition.longitude;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${currentLatitude}`);
+  console.log(`Longitude: ${currentLongitude}`);
+  console.log(`More or less ${currentPosition.accuracy} meters.`);
+};
 
 class ChatContainer extends Component {
   constructor(props) {
@@ -37,6 +69,10 @@ class ChatContainer extends Component {
   }
 
   componentWillMount() {
+    if(!!navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(updatePosition);
+    }
+
     this.setState({ chatHistory: MessageStorage.get(this.state.chatId) });
 
     io.on('connect', () => {
@@ -74,6 +110,8 @@ class ChatContainer extends Component {
       id: uuid.v4(),
       message: messageTrimmed,
       timestamp: new Date().toISOString(),
+      latitude: currentLatitude,
+      longitude: currentLongitude,
     };
     io.emit(this.state.chatId, message);
     MessageStorage.addMessage(this.state.chatId, message);
@@ -91,10 +129,12 @@ class ChatContainer extends Component {
   render() {
     return (
       <div>
-        <ChatMessageList messages={this.state.chatHistory} />
+        <div style={styles.chatMessageList}>
+          <ChatMessageList messages={this.state.chatHistory} />
+        </div>
         <div>
           <Form>
-            <FormGroup bsSize="large">
+            <FormGroup bsSize="large" style={styles.sendMessageBox}>
               <FormControl
                 componentClass="textarea"
                 id="message"
@@ -102,6 +142,7 @@ class ChatContainer extends Component {
                 onChange={this.handleChange}
                 onKeyUp={this.handleKeyPress}
               />
+            <Button onClick={this.sendMessage}>Send</Button>
             </FormGroup>
           </Form>
         </div>

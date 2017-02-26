@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
+import ReactChatview from 'react-chatview';
 
 const styles = {
   chatArea: {
@@ -15,8 +16,12 @@ const styles = {
   },
 };
 
+function doInfiniteLoad() {
+
+}
+
 const ChatMessageList = ({ messages }) => (
-  <div>
+  <ReactChatview onInfiniteLoad={ doInfiniteLoad }>
     {messages.map(message => (
       <div key={message.id} style={styles.chatArea}>
         <div style={styles.messageBox}>
@@ -24,7 +29,7 @@ const ChatMessageList = ({ messages }) => (
         </div>
       </div>
     ))}
-  </div>
+  </ReactChatview>
 );
 
 ChatMessageList.propTypes = {
