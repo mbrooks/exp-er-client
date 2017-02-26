@@ -26,7 +26,7 @@ class ChatContainer extends Component {
     super(props);
 
     this.state = {
-      chatId: 'emergency',
+      chatId: uuid.v4(),
       chatHistory: [],
       message: '',
     };
