@@ -13,7 +13,7 @@
     "react-bootstrap": "0.30.10",
     "react-chatview": "0.2.5",
     "react-dom": "16.8.6",
-    "react-google-maps": "6.3.0",
+    "react-google-maps": "9.4.5",
     "react-modal-dialog": "4.0.7",
     "react-router": "3.2.3",
     "socket.io-client": "2.2.0"
