@@ -11,7 +11,7 @@
     "moment": "2.24.0",
     "react": "15.6.2",
     "react-bootstrap": "0.30.10",
-    "react-chatview": "0.1.3",
+    "react-chatview": "0.2.5",
     "react-dom": "15.6.2",
     "react-google-maps": "6.3.0",
     "react-modal-dialog": "4.0.7",
