@@ -10,7 +10,7 @@
     "lodash": "4.17.15",
     "moment": "2.24.0",
     "react": "16.9.0",
-    "react-bootstrap": "0.32.4",
+    "react-bootstrap": "0.33.1",
     "react-chatview": "0.2.5",
     "react-dom": "16.9.0",
     "react-google-maps": "9.4.5",
