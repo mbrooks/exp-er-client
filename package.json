@@ -8,7 +8,7 @@
   "dependencies": {
     "google-map-react": "1.1.4",
     "lodash": "4.17.15",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "react": "16.9.0",
     "react-bootstrap": "0.32.4",
     "react-chatview": "0.2.5",
